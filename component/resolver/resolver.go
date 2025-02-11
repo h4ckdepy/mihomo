@@ -209,7 +209,7 @@ func ResetConnection() {
 func SortationAddr(ips []netip.Addr) (ipv4s, ipv6s []netip.Addr) {
 	for _, v := range ips {
 		if v.Unmap().Is4() {
-			ipv4s = append(ipv4s, v)
+			//ipv4s = append(ipv4s, v)
 		} else {
 			ipv6s = append(ipv6s, v)
 		}
