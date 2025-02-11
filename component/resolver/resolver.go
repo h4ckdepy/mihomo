@@ -188,11 +188,7 @@ func ResolveIPWithResolver(ctx context.Context, host string, r Resolver) (netip.
 	
 	ipv4s, ipv6s := SortationAddr(ips)
 	
-	if len(ipv6s) > 0 {
-		return ipv6s[randv2.IntN(len(ipv6s))], nil
-	}
-	
-	return ipv4s[randv2.IntN(len(ipv4s))], nil
+	return ipv6s[randv2.IntN(len(ipv6s))], nil
 }
 
 // ResolveIP with a host, return ip and priority return TypeA
@@ -209,7 +205,7 @@ func ResetConnection() {
 func SortationAddr(ips []netip.Addr) (ipv4s, ipv6s []netip.Addr) {
 	for _, v := range ips {
 		if v.Unmap().Is4() {
-			//ipv4s = append(ipv4s, v)
+			ipv4s = append(ipv4s, v)
 		} else {
 			ipv6s = append(ipv6s, v)
 		}
