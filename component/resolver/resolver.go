@@ -179,16 +179,20 @@ func LookupIP(ctx context.Context, host string) ([]netip.Addr, error) {
 // ResolveIPWithResolver same as ResolveIP, but with a resolver
 func ResolveIPWithResolver(ctx context.Context, host string, r Resolver) (netip.Addr, error) {
 	ips, err := LookupIPWithResolver(ctx, host, r)
+	
 	if err != nil {
 		return netip.Addr{}, err
 	} else if len(ips) == 0 {
 		return netip.Addr{}, fmt.Errorf("%w: %s", ErrIPNotFound, host)
 	}
+	
 	ipv4s, ipv6s := SortationAddr(ips)
-	if len(ipv4s) > 0 {
-		return ipv4s[randv2.IntN(len(ipv4s))], nil
+	
+	if len(ipv6s) > 0 {
+		return ipv6s[randv2.IntN(len(ipv6s))], nil
 	}
-	return ipv6s[randv2.IntN(len(ipv6s))], nil
+	
+	return ipv4s[randv2.IntN(len(ipv4s))], nil
 }
 
 // ResolveIP with a host, return ip and priority return TypeA
