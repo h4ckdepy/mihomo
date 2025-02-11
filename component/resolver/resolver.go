@@ -186,7 +186,7 @@ func ResolveIPWithResolver(ctx context.Context, host string, r Resolver) (netip.
 		return netip.Addr{}, fmt.Errorf("%w: %s", ErrIPNotFound, host)
 	}
 	
-	ipv4s, ipv6s := SortationAddr(ips)
+	_ , ipv6s := SortationAddr(ips)
 	
 	return ipv6s[randv2.IntN(len(ipv6s))], nil
 }
